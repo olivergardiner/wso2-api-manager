@@ -1,0 +1,22 @@
+version: v1.0
+name: First pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: 'Block #1'
+    dependencies: []
+    task:
+      secrets:
+        - name: DockerHub credentials
+      jobs:
+        - name: docker build
+          commands:
+            - checkout
+            - docker build -t wso2-am .
+            - 'echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin'
+            - 'docker tag wso2-am:latest "$DOCKER_USERNAME"/wso2-am:latest'
+            - 'docker push "$DOCKER_USERNAME"/wso2-am:latest'
+            - 'docker pull "$DOCKER_USERNAME"/wso2-am:latest'
+            - docker images
