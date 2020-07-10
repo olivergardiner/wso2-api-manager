@@ -5,4 +5,4 @@ RUN \
 	rm -f ${WSO2_SERVER_HOME}/repository/conf/deployment.toml
 	
 # copy custom deployment.toml to repository/conf
-COPY --chown=wso2carbon:wso2 deployment.toml ${USER_HOME}/
+COPY --chown=wso2carbon:wso2 deployment.toml ${WSO2_SERVER_HOME}/repository/conf/
